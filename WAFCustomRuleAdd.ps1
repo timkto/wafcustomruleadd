@@ -5,7 +5,7 @@ param (
 	[Parameter(Mandatory = $true)]
 	[string]$subscription_id,
 	[Parameter(Mandatory = $true)]
-	[object]$waf_policy_list,
+	[string[]]$waf_policy_list,
 	[Parameter(Mandatory = $true)]
 	[string]$custom_rule_name,
 	[Parameter(Mandatory = $true)]
@@ -26,11 +26,6 @@ param (
 az extension add --name front-door
 Write-Output $waf_policy_list
 Write-Output $waf_policy_list.GetType()
-Write-Output ========================================================
-
-[string[]]$WAFPolicyList = @($waf_policy_list) -join ','
-Write-Output $WAFPolicyList
-Write-Output $WAFPolicyList.GetType()
 Write-Output ========================================================
 
 [string[]]$IPArrayList = @()
