@@ -24,7 +24,7 @@ param (
 
 [string[]]$WAFPolicyList = @($waf_policy_list.split(","))
 [string[]]$IPArrayList = @()
-$IsDisabled = if ('Disabled' eq $status) {true} else {false}
+$IsDisabled = if ('Disabled' eq $status) {$true} else {$false}
 
 if ('Add' -eq $operation_type) {
 	ForEach ($WAFPolicy in $WAFPolicyList) {
