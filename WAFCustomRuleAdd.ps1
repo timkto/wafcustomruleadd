@@ -22,6 +22,9 @@ param (
 	[string]$ip_list
 )
 
+####Install front-door module for az commands####
+az extension add --name front-door
+
 [string[]]$WAFPolicyList = @($waf_policy_list.split(","))
 [string[]]$IPArrayList = @()
 $IsDisabled = if ('Disabled' -eq $status) {$true} else {$false}
