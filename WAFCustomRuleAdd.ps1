@@ -5,7 +5,7 @@ param (
 	[Parameter(Mandatory = $true)]
 	[string]$subscription_id,
 	[Parameter(Mandatory = $true)]
-	[string]$waf_policy_list,
+	[object]$waf_policy_list,
 	[Parameter(Mandatory = $true)]
 	[string]$custom_rule_name,
 	[Parameter(Mandatory = $true)]
@@ -28,7 +28,7 @@ Write-Output $waf_policy_list
 Write-Output $waf_policy_list.GetType()
 Write-Output ========================================================
 
-###[string[]]$WAFPolicyList = @($waf_policy_list) -join ','
+[string[]]$WAFPolicyList = @($waf_policy_list) -join ','
 Write-Output $WAFPolicyList
 Write-Output $WAFPolicyList.GetType()
 Write-Output ========================================================
