@@ -5,7 +5,7 @@ param (
 	[Parameter(Mandatory = $true)]
 	[string]$subscription_id,
 	[Parameter(Mandatory = $true)]
-	[string]$waf_policy_list,
+	[string[]]$waf_policy_list,
 	[Parameter(Mandatory = $true)]
 	[string]$custom_rule_name,
 	[Parameter(Mandatory = $true)]
@@ -24,12 +24,9 @@ param (
 
 ####Install front-door module for az commands####
 az extension add --name front-door
-Write-Output $waf_policy_list
-Write-Output $waf_policy_list.GetType()
-Write-Output ========================================================
 
-[string[]]$IPArrayList = @()
 $IsDisabled = if ('Disabled' -eq $status) {$true} else {$false}
+[string[]]$IPArrayList = @()
 
 if ('Add' -eq $operation_type) {
 	ForEach ($WAFPolicy in $waf_policy_list) {
