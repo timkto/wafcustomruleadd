@@ -28,6 +28,11 @@ Write-Output $waf_policy_list
 Write-Output $waf_policy_list.GetType()
 Write-Output ========================================================
 
+[string[]]$WAFPolicyList = @($waf_policy_list) -join ','
+Write-Output $WAFPolicyList
+Write-Output $WAFPolicyList.GetType()
+Write-Output ========================================================
+
 [string[]]$IPArrayList = @()
 $IsDisabled = if ('Disabled' -eq $status) {$true} else {$false}
 
