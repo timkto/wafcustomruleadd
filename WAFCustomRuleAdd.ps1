@@ -5,7 +5,7 @@ param (
 	[Parameter(Mandatory = $true)]
 	[string]$subscription_id,
 	[Parameter(Mandatory = $true)]
-	[string[]]$waf_policy_list,
+	[string]$waf_policy_list,
 	[Parameter(Mandatory = $true)]
 	[string]$custom_rule_name,
 	[Parameter(Mandatory = $true)]
