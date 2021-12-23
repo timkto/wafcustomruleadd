@@ -32,15 +32,14 @@ if ('Add' -eq $operation_type) {
 	ForEach ($WAFPolicy in $waf_policy_list) {
 		Write-Output $WAFPolicy
 		$IPList = import-csv $ip_list
+		Write-Output $IPList.GetType()
 		ForEach ($item in $IPList) {
 			$IPArrayList += $item.("public_ip")
-			Write-Output $item.("public_ip") 
 		}
 		
-		Write-Output "IPArrayList is $IPArrayList"
 		if ($IPArrayList -ne $null) {
-			az network front-door waf-policy rule create --name $custom_rule_name --priority $priority --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
-			az network front-door waf-policy rule match-condition add --match-variable RemoteAddr --operator IPMatch --values $IPArrayList --negate false --name $custom_rule_name --resource-group $rsg_name --policy-name $WAFPolicy
+			##az network front-door waf-policy rule create --name $custom_rule_name --priority $priority --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
+			##az network front-door waf-policy rule match-condition add --match-variable RemoteAddr --operator IPMatch --values $IPArrayList --negate false --name $custom_rule_name --resource-group $rsg_name --policy-name $WAFPolicy
 		}
 		
 		Write-Output "-------Empyting IP Range Array------"
