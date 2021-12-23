@@ -39,8 +39,10 @@ if ('Add' -eq $operation_type) {
 		ForEach ($item in $IPList) {
 			$IPArrayList += $item.("public_ip")
 		}
+		Write-Output $IPArrayList.count
+		Write-Output $IPArrayList.length
 		
-		$NewIPList = for($i=0; $i -lt $IPArrayList.length; $i+=100) { ,($IPArrayList[$i]..$IPArrayList[$i+99])}
+		$NewIPList = for($i=0; $i -lt $IPArrayList.length; $i+=100) { ,$IPArrayList[$i..($i + 99]}
 		
 		Write-Output $NewIPList.Length
 		Write-Output $NewIPList
