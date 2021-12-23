@@ -33,8 +33,10 @@ if ('Add' -eq $operation_type) {
 		Write-Output $WAFPolicy
 		$IPList = import-csv $ip_list
 		Write-Output $IPList.GetType()
+		Write-Output $IPList.Length
+		Write-Output $IPList
 		
-		$IPArrayList = for($i=0; $i -lt $IPList.length; $i+=100) { ,($IPList[$i]..$IPList[$i+99])}
+		##$IPArrayList = for($i=0; $i -lt $IPList.length; $i+=100) { ,($IPList[$i]..$IPList[$i+99])}
 		Write-Output $IPArrayList
 		
 		if ($IPArrayList -ne $null) {
