@@ -33,9 +33,9 @@ if ('Add' -eq $operation_type) {
 		Write-Output $WAFPolicy
 		$IPList = import-csv $ip_list
 		Write-Output $IPList.GetType()
-		ForEach ($item in $IPList) {
-			$IPArrayList += $item.("public_ip")
-		}
+		
+		$IPArrayList = for($i=0; $i -lt $IPList.length; $i+=100) { ,($IPList[$i]..$IPList[$i+99])}
+		Write-Output $IPArrayList
 		
 		if ($IPArrayList -ne $null) {
 			##az network front-door waf-policy rule create --name $custom_rule_name --priority $priority --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
