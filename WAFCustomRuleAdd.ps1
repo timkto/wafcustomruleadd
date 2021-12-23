@@ -36,8 +36,14 @@ if ('Add' -eq $operation_type) {
 		Write-Output $IPList.Length
 		Write-Output $IPList
 		
-		##$IPArrayList = for($i=0; $i -lt $IPList.length; $i+=100) { ,($IPList[$i]..$IPList[$i+99])}
-		Write-Output $IPArrayList
+		ForEach ($item in $IPList) {
+			$IPArrayList += $item.("public_ip")
+		}
+		
+		$NewIPList = for($i=0; $i -lt $IPArrayList.length; $i+=100) { ,($IPArrayList[$i]..$IPArrayList[$i+99])}
+		
+		Write-Output $NewIPList.Length
+		Write-Output $NewIPList
 		
 		if ($IPArrayList -ne $null) {
 			##az network front-door waf-policy rule create --name $custom_rule_name --priority $priority --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
