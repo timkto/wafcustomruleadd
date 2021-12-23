@@ -42,10 +42,19 @@ if ('Add' -eq $operation_type) {
 		Write-Output $IPArrayList.count
 		Write-Output $IPArrayList.length
 		
-		$NewIPList = for($i=0; $i -lt $IPArrayList.length; $i+=100) { ,$IPArrayList[$i..($i + 99)]}
+		$counter = 0
+		for($i=0; $i -lt $IPArrayList.length; $i+=3) {
+			$NewIPList += ,$IPArrayList[$i..($i+2)]
+			$counter += 1
+		}
 		
 		Write-Output $NewIPList.Length
 		Write-Output $NewIPList
+		Write-Output "counter-----------------"
+		for(; $counter -gt 0; $counter-=1) {
+			Write-Output $counter
+			Write-Output $NewIPList[$counter-1]
+		}
 		
 		if ($IPArrayList -ne $null) {
 			##az network front-door waf-policy rule create --name $custom_rule_name --priority $priority --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
