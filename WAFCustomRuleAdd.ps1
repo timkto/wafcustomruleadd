@@ -27,38 +27,31 @@ az extension add --name front-door
 
 $IsDisabled = if ('Disabled' -eq $status) {$true} else {$false}
 [string[]]$IPArrayList = @()
+[string[]]$NewIPList = @()
+$IPList = import-csv $ip_list
+
+ForEach ($item in $IPList) {
+	$IPArrayList += $item.("public_ip")
+}
+
+$counter = 0
+if ($IPArrayList -ne $null) {
+	for($i=0; $i -lt $IPArrayList.length; $i+=3) {
+		$NewIPList += ,$IPArrayList[$i..($i+2)]
+		$counter += 1
+	}
+}
 
 if ('Add' -eq $operation_type) {
 	ForEach ($WAFPolicy in $waf_policy_list) {
 		Write-Output $WAFPolicy
-		$IPList = import-csv $ip_list
-		Write-Output $IPList.GetType()
-		Write-Output $IPList.Length
-		Write-Output $IPList
 		
-		ForEach ($item in $IPList) {
-			$IPArrayList += $item.("public_ip")
-		}
-		Write-Output $IPArrayList.count
-		Write-Output $IPArrayList.length
-		
-		$counter = 0
-		for($i=0; $i -lt $IPArrayList.length; $i+=3) {
-			$NewIPList += ,$IPArrayList[$i..($i+2)]
-			$counter += 1
-		}
-		
-		Write-Output $NewIPList.Length
-		Write-Output $NewIPList
-		Write-Output "counter-----------------"
-		for(; $counter -gt 0; $counter-=1) {
-			Write-Output $counter
-			Write-Output $NewIPList[$counter-1]
-		}
-		
-		if ($IPArrayList -ne $null) {
-			##az network front-door waf-policy rule create --name $custom_rule_name --priority $priority --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
-			##az network front-door waf-policy rule match-condition add --match-variable RemoteAddr --operator IPMatch --values $IPArrayList --negate false --name $custom_rule_name --resource-group $rsg_name --policy-name $WAFPolicy
+		if ($NewIPList -ne $null) {
+			for(; $counter -gt 0; $counter-=1) {
+				Write-Output $NewIPList[$counter-1]
+				##az network front-door waf-policy rule create --name $custom_rule_name --priority $priority --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
+				##az network front-door waf-policy rule match-condition add --match-variable RemoteAddr --operator IPMatch --values $NewIPList[$counter-1] --negate false --name $custom_rule_name --resource-group $rsg_name --policy-name $WAFPolicy
+			}
 		}
 		
 		Write-Output "-------Empyting IP Range Array------"
