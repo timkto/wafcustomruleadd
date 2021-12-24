@@ -36,8 +36,8 @@ ForEach ($item in $IPList) {
 
 $counter = 0
 if ($IPArrayList -ne $null) {
-	for($i=0; $i -lt $IPArrayList.length; $i+=20) {
-		$NewIPList += ,$IPArrayList[$i..($i+19)]
+	for($i=0; $i -lt $IPArrayList.length; $i+=10) {
+		$NewIPList += ,$IPArrayList[$i..($i+9)]
 		$counter += 1
 	}
 }
@@ -50,6 +50,7 @@ if ('Add' -eq $operation_type) {
 			az network front-door waf-policy rule create --name $custom_rule_name --priority $priority --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
 			
 			for(; $counter -gt 0; $counter-=1) {
+			Write-Output $NewIPList[$counter-1]
 				az network front-door waf-policy rule match-condition add --match-variable RemoteAddr --operator IPMatch --values $NewIPList[$counter-1] --negate false --name $custom_rule_name --resource-group $rsg_name --policy-name $WAFPolicy
 			}
 		}
