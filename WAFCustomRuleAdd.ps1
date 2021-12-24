@@ -36,8 +36,8 @@ ForEach ($item in $IPList) {
 
 $counter = 0
 if ($IPArrayList -ne $null) {
-	for($i=0; $i -lt $IPArrayList.length; $i+=100) {
-		$NewIPList += ,$IPArrayList[$i..($i+99)]
+	for($i=0; $i -lt $IPArrayList.length; $i+=50) {
+		$NewIPList += ,$IPArrayList[$i..($i+49)]
 		$counter += 1
 	}
 }
