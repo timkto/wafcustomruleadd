@@ -44,18 +44,20 @@ if ('Add' -eq $operation_type) {
 			$IPCount += 1
 			$counter += 1
 			
-			if () {
+			if ($IPCount -eq 5 -or $counter -eq $IPList.length) {
+				az network front-door waf-policy rule match-condition add --match-variable RemoteAddr --operator IPMatch --values $IPArrayList --negate false --name $custom_rule_name --resource-group $rsg_name --policy-name $WAFPolicy
+				$IPCount = 0
+				$IPArrayList = @();
+			}
+			
+			if ($counter -eq 600) {
 				$PriorityID += 1
 				$RuleName += "2"
 				Write-Output "tempe"
 				Write-Output $PriorityID
 				Write-Output $RuleName
-			}
-			
-			if ($IPCount -eq 5 -or $counter -eq $IPList.length) {
-				az network front-door waf-policy rule match-condition add --match-variable RemoteAddr --operator IPMatch --values $IPArrayList --negate false --name $custom_rule_name --resource-group $rsg_name --policy-name $WAFPolicy
-				$IPCount = 0
-				$IPArrayList = @();
+				az network front-door waf-policy rule create --name $custom_rule_name --priority $PriorityID --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
+				
 			}
 		}
 		
