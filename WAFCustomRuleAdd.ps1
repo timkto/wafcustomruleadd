@@ -49,8 +49,6 @@ if ('Add' -eq $operation_type) {
 		Write-Output $WAFPolicy
 		
 		if ($NewIPList -ne $null) {
-			az network front-door waf-policy rule create --name $custom_rule_name --priority $priority --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
-			
 			for(; $counter -gt 0; $counter-=1) {
 			Write-Output $NewIPList[$counter-1]
 				az network front-door waf-policy rule create --name $custom_rule_name --priority $priority --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
