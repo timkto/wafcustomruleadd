@@ -54,7 +54,7 @@ if ('Add' -eq $operation_type) {
 			for(; $counter -gt 0; $counter-=1) {
 			Write-Output $NewIPList[$counter-1]
 				$LastIP = $NewIPList[$counter-1]
-				if($IPArrayList eq $LastIP) {
+				if($IPArrayList -eq $LastIP) {
 				Write-Output "all the same"
 				}
 				az network front-door waf-policy rule match-condition add --match-variable RemoteAddr --operator IPMatch --values $IPArrayList --negate false --name $custom_rule_name --resource-group $rsg_name --policy-name $WAFPolicy
