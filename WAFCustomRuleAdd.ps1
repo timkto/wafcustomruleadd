@@ -56,7 +56,7 @@ if ('Add' -eq $operation_type) {
 				Write-Output "tempe"
 				Write-Output $PriorityID
 				Write-Output $RuleName
-				az network front-door waf-policy rule create --name $custom_rule_name --priority $PriorityID --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
+				az network front-door waf-policy rule create --name $RuleName --priority $PriorityID --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
 				
 			}
 		}
