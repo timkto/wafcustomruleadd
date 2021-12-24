@@ -51,13 +51,13 @@ if ('Add' -eq $operation_type) {
 			az network front-door waf-policy rule create --name $custom_rule_name --priority $priority --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
 			for(; $counter -gt 0; $counter-=1) {
 			Write-Output $NewIPList[$counter-1]
-				$LastIP = $NewIPList[$counter-1]
+				$LastIP = @($NewIPList[$counter-1])
 				Write-Output $IPArrayList.GetType()
 				Write-Output $IPArrayList
 				Write-Output "test kit"
 				Write-Output $LastIP.GetType()
 				Write-Output $LastIP
-				az network front-door waf-policy rule match-condition add --match-variable RemoteAddr --operator IPMatch --values $IPArrayList --negate false --name $custom_rule_name --resource-group $rsg_name --policy-name $WAFPolicy
+				az network front-door waf-policy rule match-condition add --match-variable RemoteAddr --operator IPMatch --values $LastIP --negate false --name $custom_rule_name --resource-group $rsg_name --policy-name $WAFPolicy
 			}
 		}
 		
