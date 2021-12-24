@@ -33,6 +33,7 @@ $IPList = import-csv $ip_list
 ForEach ($item in $IPList) {
 	$IPArrayList += $item.("public_ip")
 }
+Write-Output $IPArrayList.GetType()
 
 $counter = 0
 if ($IPArrayList -ne $null) {
@@ -41,6 +42,7 @@ if ($IPArrayList -ne $null) {
 		$counter += 1
 	}
 }
+Write-Output $NewIPList.GetType()
 
 if ('Add' -eq $operation_type) {
 	ForEach ($WAFPolicy in $waf_policy_list) {
