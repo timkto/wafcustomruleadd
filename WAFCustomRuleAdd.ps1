@@ -42,6 +42,7 @@ if ('Add' -eq $operation_type) {
 			if ($counter -eq 5) {
 				az network front-door waf-policy rule match-condition add --match-variable RemoteAddr --operator IPMatch --values $IPArrayList --negate false --name $custom_rule_name --resource-group $rsg_name --policy-name $WAFPolicy
 				$counter = 0
+				$IPArrayList = @();
 			}
 		}
 		
