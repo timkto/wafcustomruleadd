@@ -49,16 +49,6 @@ if ('Add' -eq $operation_type) {
 				$IPCount = 0
 				$IPArrayList = @();
 			}
-			
-			if ($counter -eq 600) {
-				$PriorityID += 1
-				$RuleName += "2"
-				Write-Output "tempe"
-				Write-Output $PriorityID
-				Write-Output $RuleName
-				az network front-door waf-policy rule create --name $RuleName --priority $PriorityID --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
-				
-			}
 		}
 		
 		Write-Output "-------Empyting IP Range Array------"
