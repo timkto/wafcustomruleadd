@@ -48,7 +48,7 @@ if ('Add' -eq $operation_type) {
 				az network front-door waf-policy rule match-condition add --match-variable RemoteAddr --operator IPMatch --values $IPArrayList --negate false --name $RuleName --resource-group $rsg_name --policy-name $WAFPolicy
 				$counter = 0
 				$IPArrayList = @();
-				Write-Output $WAFPolicy " IPCount is " $IPCount
+				Write-Output "$WAFPolicy IPCount is $IPCount"
 			}
 			
 			if ($IPCount -eq 600) {
