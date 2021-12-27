@@ -37,7 +37,7 @@ $IPCount = 0
 if ('Add' -eq $operation_type) {
 	ForEach ($WAFPolicy in $waf_policy_list) {
 		Write-Output $WAFPolicy
-		##az network front-door waf-policy rule create --name $custom_rule_name --priority $PriorityID --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
+		##az network front-door waf-policy rule create --name $RuleName --priority $PriorityID --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
 		
 		ForEach ($item in $IPList) {
 			$IPArrayList += $item.("public_ip")
