@@ -28,12 +28,12 @@ az extension add --name front-door
 $IsDisabled = if ('Disabled' -eq $status) {$true} else {$false}
 [string[]]$IPArrayList = @()
 [string[]]$NewIPList = @()
-$PriorityID = $priority
-$RuleName = $custom_rule_name
 $IPList = import-csv $ip_list
 
 if ('Add' -eq $operation_type) {
 	ForEach ($WAFPolicy in $waf_policy_list) {
+		$PriorityID = $priority
+		$RuleName = $custom_rule_name
 		$IPCount = 0
 		$counter = 0
 		Write-Output $WAFPolicy
@@ -53,11 +53,7 @@ if ('Add' -eq $operation_type) {
 			
 			if ($counter -eq 600) {
 				$PriorityID += 1
-				Write-Output $PriorityID.GetType()
 				$RuleName += $PriorityID
-				Write-Output "tempe"
-				Write-Output $PriorityID
-				Write-Output $RuleName
 				az network front-door waf-policy rule create --name $RuleName --priority $PriorityID --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
 
 			}
