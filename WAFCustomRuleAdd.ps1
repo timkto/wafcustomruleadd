@@ -31,11 +31,11 @@ $IsDisabled = if ('Disabled' -eq $status) {$true} else {$false}
 $PriorityID = $priority
 $RuleName = $custom_rule_name
 $IPList = import-csv $ip_list
-$counter = 0
-$IPCount = 0
 
 if ('Add' -eq $operation_type) {
 	ForEach ($WAFPolicy in $waf_policy_list) {
+		$IPCount = 0
+		$counter = 0
 		Write-Output $WAFPolicy
 		az network front-door waf-policy rule create --name $RuleName --priority $PriorityID --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
 		
@@ -44,11 +44,11 @@ if ('Add' -eq $operation_type) {
 			$IPCount += 1
 			$counter += 1
 			
-			if ($IPCount -eq 100 -or $counter -eq $IPList.length) {
+			if ($counter -eq 100 -or $IPCount -eq $IPList.length) {
 				az network front-door waf-policy rule match-condition add --match-variable RemoteAddr --operator IPMatch --values $IPArrayList --negate false --name $RuleName --resource-group $rsg_name --policy-name $WAFPolicy
-				$IPCount = 0
+				$counter = 0
 				$IPArrayList = @();
-				Write-Output $counter
+				Write-Output $WAFPolicy + " IPCount is " + $IPCount
 			}
 			
 			if ($counter -eq 600) {
