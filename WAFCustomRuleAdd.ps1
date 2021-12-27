@@ -37,7 +37,7 @@ $IPCount = 0
 if ('Add' -eq $operation_type) {
 	ForEach ($WAFPolicy in $waf_policy_list) {
 		Write-Output $WAFPolicy
-		##az network front-door waf-policy rule create --name $RuleName --priority $PriorityID --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
+		az network front-door waf-policy rule create --name $RuleName --priority $PriorityID --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
 		
 		ForEach ($item in $IPList) {
 			$IPArrayList += $item.("public_ip")
@@ -45,7 +45,7 @@ if ('Add' -eq $operation_type) {
 			$counter += 1
 			
 			if ($IPCount -eq 100 -or $counter -eq $IPList.length) {
-				##az network front-door waf-policy rule match-condition add --match-variable RemoteAddr --operator IPMatch --values $IPArrayList --negate false --name $custom_rule_name --resource-group $rsg_name --policy-name $WAFPolicy
+				az network front-door waf-policy rule match-condition add --match-variable RemoteAddr --operator IPMatch --values $IPArrayList --negate false --name $RuleName --resource-group $rsg_name --policy-name $WAFPolicy
 				$IPCount = 0
 				$IPArrayList = @();
 				Write-Output $counter
@@ -58,7 +58,7 @@ if ('Add' -eq $operation_type) {
 				Write-Output "tempe"
 				Write-Output $PriorityID
 				Write-Output $RuleName
-				##az network front-door waf-policy rule create --name $RuleName --priority $PriorityID --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
+				az network front-door waf-policy rule create --name $RuleName --priority $PriorityID --rule-type $rule_type --action $action --resource-group $rsg_name --policy-name $WAFPolicy --disabled $IsDisabled --defer
 
 			}
 		}
